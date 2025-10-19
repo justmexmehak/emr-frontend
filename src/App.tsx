@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
 // import PatientForm from './features/patients/PatientForm';
 import SearchBar from './components/SearchBar';
@@ -12,7 +12,7 @@ import Medications from './pages/Medications';
 
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL || '/'}>
+    <HashRouter basename={import.meta.env.BASE_URL || '/'}>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route 
@@ -67,7 +67,7 @@ function App() {
         />
         <Route path="/patient/search" element={<SearchBar />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
