@@ -12,7 +12,7 @@ export interface PatientPayload {
     age: string;
     contact: string;
     gender: string;
-    date: string;
+    visitDate: string;
     diagnosis: string;
     notes: string;
     prescription: Prescription[];
@@ -43,13 +43,13 @@ export interface Medication {
     name: string;
 }
 
-export interface Prescription {
-    id: string;
-    medication: Medication;
-    dosage: string;
-    frequency: string;
-    duration: string;
-}
+// export interface Prescription {
+//     id: string;
+//     medication: Medication;
+//     dosage: string;
+//     frequency: string;
+//     duration: string;
+// }
 
 export interface Visit {
     id: string;

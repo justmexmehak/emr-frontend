@@ -75,14 +75,14 @@ const PatientProfile = () => {
             diagnosis: form.diagnosis,
             notes: form.notes,
             prescription: form.prescription.map(med => ({
-                name: med.name || med.medication?.name || "",
+                name:med.medication?.name || "",
                 dosage: med.dosage,
                 frequency: med.frequency,
                 duration: med.duration
             }))
         };
         console.log("Payload being sent", payload);
-        const result = await addVisitRecord(id, payload);
+        const result = await addVisitRecord(id!, payload);
         if (result.success) {
             alert("Visit record added!");
             setShowForm(false);
@@ -120,18 +120,18 @@ const PatientProfile = () => {
         y += 10;
         const maxWidth = 50;
         const diagnosisLines = doc.splitTextToSize(form.diagnosis, maxWidth);
-        diagnosisLines.forEach((line, index) => {
+        diagnosisLines.forEach((line: string, index: number) => {
             doc.text(line, 25, 75 + index * 10, { align: "center" });
         });
         y += 10;
 
-        if (form.prescription.length > 0 && form.prescription.some(med => med.name)) {
+        if (form.prescription.length > 0 && form.prescription.some(med => med.medication.name)) {
             // doc.text("Prescription:", marginLeft, y, { align: "center" });
             y = 75;
-            form.prescription.forEach((med, idx) => {
-                if (med.name) {
+            form.prescription.forEach((med, _idx) => {
+                if (med.medication.name) {
                     doc.text(
-                        `${med.name} — ${med.dosage} ${med.frequency} ${med.duration}`,
+                        `${med.medication.name} — ${med.dosage} ${med.frequency} ${med.duration}`,
                         120,
                         y,
                         { align: "center" }
@@ -284,7 +284,7 @@ const PatientProfile = () => {
             <input
                 type="text"
                 placeholder="Medicine Name"
-                value={med.name}
+                value={med.medication.name}
                 onChange={e => handlePrescriptionChange(idx, "name", e.target.value)}
                 style={{ padding: "6px", borderRadius: "4px", border: "1px solid #ccc", width: "100%" }}
                 required
@@ -292,7 +292,7 @@ const PatientProfile = () => {
                 onFocus={() => setShowSuggestionsIdx(idx)}
             />
             {/* Auto-complete dropdown */}
-            {showSuggestionsIdx === idx && med.name && (
+            {showSuggestionsIdx === idx && med.medication.name && (
                 <div style={{
                     position: "absolute",
                     top: "110%",
@@ -307,7 +307,7 @@ const PatientProfile = () => {
                     overflowY: "auto"
                 }}>
                     {medicines
-                        .filter(name => name.toLowerCase().includes(med.name.toLowerCase()))
+                        .filter(name => name.toLowerCase().includes(med.medication.name.toLowerCase()))
                         .slice(0, 10)
                         .map((name, i) => (
                             <div
@@ -434,8 +434,8 @@ const PatientProfile = () => {
                                 ) : (
                                     <ul style={{ margin: "8px 0 0 0", paddingLeft: "18px" }}>
                                         {visit.prescription.map((med) => (
-                                            <li key={med.id} style={{ marginBottom: "6px", listStyle: "none" }}>
-                                                <span style={{ fontWeight: "bold" }}>{med.medication.name}</span>
+                                            <li key={med.name} style={{ marginBottom: "6px", listStyle: "none" }}>
+                                                <span style={{ fontWeight: "bold" }}>{med.name}</span>
                                                 <span style={{ color: "#555" }}> — {med.dosage} {med.frequency} {med.duration}</span>
                                             </li>
                                         ))}

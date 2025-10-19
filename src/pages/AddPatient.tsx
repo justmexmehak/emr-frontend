@@ -5,7 +5,8 @@ import { addPatient } from "../services/patientsService";
 
 const getToday = () => new Date().toISOString().slice(0, 10);
 
-const AddPatient = () => {
+
+    const AddPatient = () => {
     const [form, setForm] = useState({
         name: "",
         age: "",
@@ -84,7 +85,7 @@ const AddPatient = () => {
         // y += 10;
         const maxWidth = 50;
         const diagnosisLines = doc.splitTextToSize(form.diagnosis, maxWidth);
-        diagnosisLines.forEach((line, index) => {
+        diagnosisLines.forEach((line: string, index: number) => {
             doc.text(line, 25, 75 + index * 10, { align: "center" });
         });
         // y += 10;
@@ -92,7 +93,7 @@ const AddPatient = () => {
         if (form.prescription.length > 0 && form.prescription.some(med => med.name)) {
             // doc.text("Prescription:", marginLeft, y, { align: "center" });
             let y = 75;
-            form.prescription.forEach((med, idx) => {
+            form.prescription.forEach((med, _idx) => {
                 if (med.name) {
                     doc.text(
                         `${med.name} — ${med.dosage} ${med.frequency} ${med.duration}`,
